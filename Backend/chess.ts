@@ -68,7 +68,7 @@ app.post('/join-game', (req: express.Request, res: express.Response) => {
     const game = games[gameId];
 
     if (game.players.length >= 2) {
-        return res.status(400).json({ message: 'Game already full' });
+        retn res.status(400).json({ message: 'Game already full' });
     }
 
     game.players.push(player);
@@ -82,7 +82,7 @@ app.post('/make-move', async (req: express.Request, res: express.Response): Prom
     const { gameId, from, to } = req.body as { gameId: string, from: [number, number], to: [number, number] };
 
     if (!games[gameId]) {
-        return res.status(404).json({ message: 'Game not found' });
+        res.status(404).json({ message: 'Game not found' });
     }
 
     const game = games[gameId];
@@ -90,7 +90,7 @@ app.post('/make-move', async (req: express.Request, res: express.Response): Prom
     const toCoords: [number, number] = to;
 
     if (!isValidMove(game.board, fromCoords, toCoords, game.currentTurn)) {
-        return res.status(400).json({ message: 'Invalid move' });
+        res.status(400).json({ message: 'Invalid move' });
     }
 
     const piece = game.board[fromCoords[0]][fromCoords[1]];
@@ -108,7 +108,7 @@ app.get('/game/:gameId', (req: express.Request, res: express.Response): void => 
     const { gameId } = req.params;
 
     if (!games[gameId]) {
-        return res.status(404).json({ message: 'Game not found' });
+        res.status(404).json({ message: 'Game not found' });
     }
 
     const game = games[gameId];
