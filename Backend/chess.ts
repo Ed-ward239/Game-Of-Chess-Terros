@@ -62,13 +62,13 @@ app.post('/join-game', (req: express.Request, res: express.Response) => {
     const { gameId, player } = req.body as { gameId: string, player: string };
 
     if (!games[gameId]) {
-        return res.status(404).json({ message: 'Game not found' });
+        res.status(404).json({ message: 'Game not found' });
     }
 
     const game = games[gameId];
 
     if (game.players.length >= 2) {
-        retn res.status(400).json({ message: 'Game already full' });
+        res.status(400).json({ message: 'Game already full' });
     }
 
     game.players.push(player);
